@@ -1,1 +1,1 @@
-// Estrutura inicial do projeto
+// Rota consolidada. Junta todos os cálculos em uma única chamada

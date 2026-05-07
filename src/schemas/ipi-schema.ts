@@ -1,1 +1,1 @@
-// Estrutura inicial do projeto
+// Validação de entrada do IPI

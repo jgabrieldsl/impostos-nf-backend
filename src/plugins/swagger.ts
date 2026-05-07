@@ -1,1 +1,1 @@
-// Estrutura inicial do projeto
+// Configuração da documentação Swagger/OpenAPI

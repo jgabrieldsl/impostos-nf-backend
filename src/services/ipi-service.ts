@@ -1,1 +1,1 @@
-// Estrutura inicial do projeto
+// Lógica de cálculo do IPI

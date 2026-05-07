@@ -1,5 +1,6 @@
-import Fastify from "fastify";
+// Ponto de entrada da aplicação. Responsável apenas por iniciar o servidor HTTP.
 
+import Fastify from "fastify";
 import { env } from "./env";
 import { healthRoutes } from "./routes/health";
 

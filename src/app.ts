@@ -1,1 +1,1 @@
-// Estrutura inicial do projeto
+// Configuração principal do Fastify. Registra rotas, plugins e configurações globais.
