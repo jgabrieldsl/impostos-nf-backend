@@ -51,20 +51,18 @@ Funções auxiliares reutilizáveis, helpers, constantes e formatadores.
 ## Equipe e Atribuições
 
 ### 👨‍💻 João Gabriel (JG)
-**Backend, Front-end & DevOps**
+**Backend & DevOps**
 *   **API:** Estrutura base do projeto (Node.js + Fastify), rota `/health` e rota `/nf-completa` (consolidação de impostos).
-*   **DevOps:** CI/CD (GitHub Actions), deploy no Railway e gestão do repositório.
+*   **DevOps:** CI/CD (GitHub Actions), deploy na AWS e gestão do repositório.
 *   **Gestão:** Code review, cronograma e Setup inicial do projeto.
 
 ### 👨‍💻 Pedro Daou (PD)
-**Backend & Front-end**
+**Backend**
 *   **API:** Rotas `/icms` (alíquota por estado) e `/ipi` (cálculo sobre produto) + Testes unitários.
-*   **Front-end:** Telas de cálculo individual de ICMS e IPI, e tela de Help.
 
 ### 👨‍💻 Gabriel Bonatto (GB)
-**Backend & Front-end**
+**Backend & Doc**
 *   **API:** Rota `/pis-cofins` (regimes cumulativo/não cumulativo) + Testes unitários.
-*   **Front-end:** Tela de cálculo individual de PIS/COFINS e tela "Sobre" (Equipe).
 *   **Doc:** Testes funcionais e documentação técnica (README).
 
 ---
