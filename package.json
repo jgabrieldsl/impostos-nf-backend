@@ -1,7 +1,7 @@
 {
   "name": "impostos-nf",
   "version": "1.0.0",
-  "description": "",
+  "description": "API para cálculo de impostos (ICMS, IPI, PIS/COFINS) para Notas Fiscais.",
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
@@ -25,10 +25,22 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.14",
-    "@types/node": "^25.6.0",
+    "@types/node": "^25.9.0",
     "supertest": "^7.2.2",
-    "tsx": "^4.21.0",
+    "tsx": "^4.22.2",
     "typescript": "^6.0.3",
     "vitest": "^4.1.5"
-  }
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jgabrieldsl/impostos-nf-backend.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jgabrieldsl/impostos-nf-backend/issues"
+  },
+  "homepage": "https://github.com/jgabrieldsl/impostos-nf-backend#readme"
 }
