@@ -1,19 +1,35 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { pisCofinService } from '../services/pis-service';
-import { pisSchema } from '../schemas/pis-schema';
 
-interface PisRequest {
+interface PisCofinRequest {
   productValue: number;
   pisRate?: number;
   confinsRate?: number;
 }
 
 export async function pisCofinRoutes(app: FastifyInstance) {
-  app.post<{ Body: PisRequest }>(
+  app.post<{ Body: PisCofinRequest }>(
     '/IMPOSTOS/calcular-pis-confins',
     {
       schema: {
-        body: pisSchema,
+        body: {
+          type: 'object',
+          required: ['productValue'],
+          properties: {
+            productValue: {
+              type: 'number',
+              description: 'Valor do produto em reais',
+            },
+            pisRate: {
+              type: 'number',
+              description: 'Taxa de PIS (0-1)',
+            },
+            confinsRate: {
+              type: 'number',
+              description: 'Taxa de CONFINS (0-1)',
+            },
+          },
+        },
         response: {
           200: {
             type: 'object',
@@ -30,7 +46,10 @@ export async function pisCofinRoutes(app: FastifyInstance) {
         },
       },
     },
-    async (request: FastifyRequest<{ Body: PisRequest }>, reply: FastifyReply) => {
+    async (
+      request: FastifyRequest<{ Body: PisCofinRequest }>,
+      reply: FastifyReply
+    ) => {
       const result = pisCofinService(request.body);
       return reply.send(result);
     }
