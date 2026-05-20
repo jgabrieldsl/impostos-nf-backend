@@ -15,17 +15,27 @@ export async function ipiRoutes(app: FastifyInstance) {
       schema: {
         body: {
           type: "object",
-          required: ["productValue", "ipiRate"],
+          required: ["productValue", "ncm"],
           properties: {
             productValue: {
               type: "number",
               description: "Valor do produto em reais",
             },
-            ipiRate: {
+            freightValue: {
               type: "number",
               minimum: 0,
-              maximum: 1,
-              description: "Aliquota de IPI em decimal. Ex: 0.05 para 5%",
+              description: "Valor do frete em reais",
+            },
+            additionalExpenses: {
+              type: "number",
+              minimum: 0,
+              description: "Despesas acessorias cobradas do destinatario",
+            },
+            ncm: {
+              type: "string",
+              pattern: "^\\d{4}\\.\\d{2}\\.\\d{2}$",
+              description:
+                "Codigo NCM usado para obter a aliquota de IPI na tabela TIPI suportada",
             },
           },
         },
@@ -33,10 +43,16 @@ export async function ipiRoutes(app: FastifyInstance) {
           200: {
             type: "object",
             properties: {
+              ncm: { type: "string" },
+              productDescription: { type: "string" },
               productValue: { type: "string" },
+              freightValue: { type: "string" },
+              additionalExpenses: { type: "string" },
+              calculationBasis: { type: "string" },
               ipiRate: { type: "string" },
               ipiAmount: { type: "string" },
               total: { type: "string" },
+              legalSource: { type: "string" },
             },
           },
           400: {
