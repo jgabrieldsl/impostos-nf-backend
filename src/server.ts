@@ -3,6 +3,7 @@ import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUI from '@fastify/swagger-ui';
 import fastifyCors from '@fastify/cors';
 
+import { icmsRoutes } from './routes/icms';
 import { pisCofinRoutes } from './routes/pis-cofins';
 
 const app = Fastify({
@@ -33,6 +34,7 @@ app.register(fastifySwaggerUI, {
 });
 
 app.register(pisCofinRoutes);
+app.register(icmsRoutes);
 
 const PORT = 3333;
 app.listen({ port: PORT, host: '0.0.0.0' }, (err) => {
