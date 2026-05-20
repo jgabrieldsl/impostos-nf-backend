@@ -2,7 +2,7 @@ import Fastify from 'fastify';
 import { describe, expect, it } from 'vitest';
 
 import { icmsRoutes } from '../routes/icms';
-import { icmsService } from '../services/icms-service';
+import { ICMS_RULES_BY_STATE, icmsService } from '../services/icms-service';
 
 describe('ICMS Service', () => {
   it('calcula ICMS pela aliquota do estado', () => {
@@ -14,6 +14,13 @@ describe('ICMS Service', () => {
       icmsRate: '18.00%',
       icmsAmount: '18.00',
       total: '118.00',
+      taxRule: {
+        operationType: 'internal',
+        validFrom: '2026-01-01',
+        sourceName:
+          'Tabela simplificada de aliquotas internas de ICMS do projeto academico',
+        sourceUrl: 'docs/icms-rules.md',
+      },
     });
   });
 
@@ -29,6 +36,16 @@ describe('ICMS Service', () => {
     expect(() => icmsService({ productValue: 100, state: 'XX' })).toThrow(
       'state deve ser uma UF brasileira valida',
     );
+  });
+
+  it('mantem regra tributaria rastreavel para todas as UFs', () => {
+    for (const taxRule of Object.values(ICMS_RULES_BY_STATE)) {
+      expect(taxRule.rate).toBeGreaterThan(0);
+      expect(taxRule.validFrom).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(taxRule.operationType).toBe('internal');
+      expect(taxRule.sourceName).not.toHaveLength(0);
+      expect(taxRule.sourceUrl).not.toHaveLength(0);
+    }
   });
 });
 
@@ -55,6 +72,13 @@ describe('POST /icms', () => {
       icmsRate: '17.00%',
       icmsAmount: '25.50',
       total: '175.50',
+      taxRule: {
+        operationType: 'internal',
+        validFrom: '2026-01-01',
+        sourceName:
+          'Tabela simplificada de aliquotas internas de ICMS do projeto academico',
+        sourceUrl: 'docs/icms-rules.md',
+      },
     });
   });
 

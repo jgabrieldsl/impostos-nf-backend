@@ -39,6 +39,15 @@ export async function icmsRoutes(app: FastifyInstance) {
               icmsRate: { type: 'string' },
               icmsAmount: { type: 'string' },
               total: { type: 'string' },
+              taxRule: {
+                type: 'object',
+                properties: {
+                  operationType: { type: 'string' },
+                  validFrom: { type: 'string' },
+                  sourceName: { type: 'string' },
+                  sourceUrl: { type: 'string' },
+                },
+              },
             },
           },
           400: {
