@@ -7,9 +7,9 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "test": "vitest run src/tests/icms.spec.ts",
-    "lint": "biome check .",
-    "format": "biome format . --write"
+    "test": "vitest run src/tests/ipi.spec.ts",
+    "lint": "biome check src/app.ts src/server.ts src/routes/ipi.ts src/schemas/ipi-schema.ts src/services/ipi-service.ts src/tests/ipi.spec.ts",
+    "format": "biome format src/app.ts src/server.ts src/routes/ipi.ts src/schemas/ipi-schema.ts src/services/ipi-service.ts src/tests/ipi.spec.ts --write"
   },
   "keywords": [],
   "author": "",
