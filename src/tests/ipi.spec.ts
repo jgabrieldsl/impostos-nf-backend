@@ -4,17 +4,31 @@ import { buildApp } from "../app";
 import { ipiService } from "../services/ipi-service";
 
 describe("IPI Service", () => {
-  it("calcula IPI corretamente sobre o valor do produto", () => {
-    const result = ipiService({ productValue: 100, ipiRate: 0.05 });
+  it("calcula IPI usando aliquota da TIPI pelo NCM", () => {
+    const result = ipiService({ productValue: 100, ncm: "2201.10.00" });
 
-    expect(parseFloat(result.ipiAmount)).toBeCloseTo(5);
-    expect(parseFloat(result.total)).toBeCloseTo(105);
-    expect(result.ipiRate).toBe("5.00%");
+    expect(result.ncm).toBe("2201.10.00");
+    expect(parseFloat(result.ipiAmount)).toBeCloseTo(2.6);
+    expect(parseFloat(result.total)).toBeCloseTo(102.6);
+    expect(result.ipiRate).toBe("2.60%");
   });
 
-  it("rejeita aliquota fora do intervalo permitido", () => {
-    expect(() => ipiService({ productValue: 100, ipiRate: 1.5 })).toThrow(
-      "ipiRate deve estar entre 0 e 1",
+  it("inclui frete e despesas acessorias na base de calculo", () => {
+    const result = ipiService({
+      productValue: 100,
+      freightValue: 10,
+      additionalExpenses: 5,
+      ncm: "2201.10.00",
+    });
+
+    expect(result.calculationBasis).toBe("115.00");
+    expect(parseFloat(result.ipiAmount)).toBeCloseTo(2.99);
+    expect(result.total).toBe("117.99");
+  });
+
+  it("rejeita NCM sem aliquota suportada", () => {
+    expect(() => ipiService({ productValue: 100, ncm: "9999.99.99" })).toThrow(
+      "NCM nao suportado para calculo de IPI",
     );
   });
 });
@@ -28,7 +42,7 @@ describe("POST /ipi", () => {
       url: "/ipi",
       payload: {
         productValue: 200,
-        ipiRate: 0.1,
+        ncm: "2201.10.00",
       },
     });
 
@@ -36,10 +50,17 @@ describe("POST /ipi", () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.json()).toEqual({
+      ncm: "2201.10.00",
+      productDescription: "Aguas minerais e aguas gaseificadas",
       productValue: "200.00",
-      ipiRate: "10.00%",
-      ipiAmount: "20.00",
-      total: "220.00",
+      freightValue: "0.00",
+      additionalExpenses: "0.00",
+      calculationBasis: "200.00",
+      ipiRate: "2.60%",
+      ipiAmount: "5.20",
+      total: "205.20",
+      legalSource:
+        "TIPI Receita Federal: NCM 2201.10.00 possui aliquota de IPI de 2,6%",
     });
   });
 
@@ -51,7 +72,7 @@ describe("POST /ipi", () => {
       url: "/ipi",
       payload: {
         productValue: 100,
-        ipiRate: 2,
+        ncm: "99999999",
       },
     });
 
@@ -59,7 +80,7 @@ describe("POST /ipi", () => {
 
     expect(response.statusCode).toBe(400);
     expect(response.json()).toEqual({
-      message: "body/ipiRate must be <= 1",
+      message: 'body/ncm must match pattern "^\\d{4}\\.\\d{2}\\.\\d{2}$"',
     });
   });
 
@@ -78,7 +99,7 @@ describe("POST /ipi", () => {
 
     expect(response.statusCode).toBe(400);
     expect(response.json()).toEqual({
-      message: "body must have required property 'ipiRate'",
+      message: "body must have required property 'ncm'",
     });
   });
 });
