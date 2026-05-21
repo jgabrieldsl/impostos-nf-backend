@@ -9,7 +9,7 @@ import { icmsService } from '../services/icms-service';
 
 export async function icmsRoutes(app: FastifyInstance) {
   app.post<{ Body: IcmsCalculationInput }>(
-    '/icms',
+    '/impostos/icms',
     {
       attachValidation: true,
       schema: {
