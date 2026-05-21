@@ -1,0 +1,42 @@
+{
+  "family": "impostos-nf-backend-td",
+  "containerDefinitions": [
+    {
+      "name": "api",
+      "image": "770385967300.dkr.ecr.us-east-1.amazonaws.com/impostos-nf-backend:latest",
+      "portMappings": [
+        {
+          "containerPort": 3333,
+          "hostPort": 3333,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "environment": [
+        {
+          "name": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "name": "PORT",
+          "value": "3333"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/impostos-nf-backend-td",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs",
+          "awslogs-create-group": "true"
+        }
+      }
+    }
+  ],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "networkMode": "awsvpc",
+  "cpu": "256",
+  "memory": "512"
+}
