@@ -1,33 +1,33 @@
-import { icmsCalculationSchema } from '../schemas/icms-schema';
+import { icmsCalculationSchema } from "../schemas/icms-schema";
 
 type StateCode =
-  | 'AC'
-  | 'AL'
-  | 'AP'
-  | 'AM'
-  | 'BA'
-  | 'CE'
-  | 'DF'
-  | 'ES'
-  | 'GO'
-  | 'MA'
-  | 'MT'
-  | 'MS'
-  | 'MG'
-  | 'PA'
-  | 'PB'
-  | 'PR'
-  | 'PE'
-  | 'PI'
-  | 'RJ'
-  | 'RN'
-  | 'RS'
-  | 'RO'
-  | 'RR'
-  | 'SC'
-  | 'SP'
-  | 'SE'
-  | 'TO';
+  | "AC"
+  | "AL"
+  | "AP"
+  | "AM"
+  | "BA"
+  | "CE"
+  | "DF"
+  | "ES"
+  | "GO"
+  | "MA"
+  | "MT"
+  | "MS"
+  | "MG"
+  | "PA"
+  | "PB"
+  | "PR"
+  | "PE"
+  | "PI"
+  | "RJ"
+  | "RN"
+  | "RS"
+  | "RO"
+  | "RR"
+  | "SC"
+  | "SP"
+  | "SE"
+  | "TO";
 
 interface IcmsCalculationResponse {
   productValue: string;
@@ -43,22 +43,22 @@ interface IcmsTaxRule {
   validFrom: string;
   sourceName: string;
   sourceUrl: string;
-  operationType: 'internal';
+  operationType: "internal";
 }
 
 interface IcmsTaxRuleMetadata {
-  operationType: 'internal';
+  operationType: "internal";
   validFrom: string;
   sourceName: string;
   sourceUrl: string;
 }
 
 const SIMPLIFIED_ICMS_SOURCE = {
-  validFrom: '2026-01-01',
+  validFrom: "2026-01-01",
   sourceName:
-    'Tabela simplificada de aliquotas internas de ICMS do projeto academico',
-  sourceUrl: 'docs/icms-rules.md',
-  operationType: 'internal' as const,
+    "Tabela simplificada de aliquotas internas de ICMS do projeto academico",
+  sourceUrl: "docs/icms-rules.md",
+  operationType: "internal" as const,
 };
 
 export const ICMS_RULES_BY_STATE: Record<StateCode, IcmsTaxRule> = {
@@ -96,7 +96,7 @@ export function icmsService(payload: unknown): IcmsCalculationResponse {
   const taxRule = ICMS_RULES_BY_STATE[state as StateCode];
 
   if (taxRule === undefined) {
-    throw new Error('state deve ser uma UF brasileira valida');
+    throw new Error("state deve ser uma UF brasileira valida");
   }
 
   const icmsAmount = productValue * taxRule.rate;

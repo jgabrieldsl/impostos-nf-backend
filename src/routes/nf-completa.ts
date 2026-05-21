@@ -1,124 +1,125 @@
-import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import { ZodError } from 'zod';
+import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { ZodError } from "zod";
 
 import {
   type NfCompletaInput,
   nfCompletaSchema,
-} from '../schemas/nf-completa-schema';
-import { nfCompletaService } from '../services/nf-completa-service';
+} from "../schemas/nf-completa-schema";
+import { nfCompletaService } from "../services/nf-completa-service";
 
 export async function nfCompletaRoutes(app: FastifyInstance) {
   app.post<{ Body: NfCompletaInput }>(
-    '/impostos/nf-completa',
+    "/impostos/nf-completa",
     {
       attachValidation: true,
       schema: {
-        description: 'Calcula e consolida todos os impostos incidentes na nota fiscal (ICMS, IPI, PIS/COFINS)',
-        tags: ['Impostos'],
+        description:
+          "Calcula e consolida todos os impostos incidentes na nota fiscal (ICMS, IPI, PIS/COFINS)",
+        tags: ["Impostos"],
         body: {
-          type: 'object',
-          required: ['productValue', 'state', 'ncm'],
+          type: "object",
+          required: ["productValue", "state", "ncm"],
           properties: {
             productValue: {
-              type: 'number',
+              type: "number",
               exclusiveMinimum: 0,
-              description: 'Valor do produto em reais',
+              description: "Valor do produto em reais",
             },
             state: {
-              type: 'string',
+              type: "string",
               minLength: 2,
               maxLength: 2,
-              description: 'UF brasileira para o calculo do ICMS',
+              description: "UF brasileira para o calculo do ICMS",
             },
             ncm: {
-              type: 'string',
-              pattern: '^\\d{4}\\.\\d{2}\\.\\d{2}$',
-              description: 'Codigo NCM para aliquota de IPI',
+              type: "string",
+              pattern: "^\\d{4}\\.\\d{2}\\.\\d{2}$",
+              description: "Codigo NCM para aliquota de IPI",
             },
             freightValue: {
-              type: 'number',
+              type: "number",
               minimum: 0,
               default: 0,
-              description: 'Valor do frete em reais',
+              description: "Valor do frete em reais",
             },
             additionalExpenses: {
-              type: 'number',
+              type: "number",
               minimum: 0,
               default: 0,
-              description: 'Despesas acessorias em reais',
+              description: "Despesas acessorias em reais",
             },
             pisRate: {
-              type: 'number',
+              type: "number",
               minimum: 0,
               maximum: 1,
-              description: 'Taxa customizada do PIS (0-1)',
+              description: "Taxa customizada do PIS (0-1)",
             },
             confinsRate: {
-              type: 'number',
+              type: "number",
               minimum: 0,
               maximum: 1,
-              description: 'Taxa customizada do COFINS (0-1)',
+              description: "Taxa customizada do COFINS (0-1)",
             },
           },
         },
         response: {
           200: {
-            type: 'object',
+            type: "object",
             properties: {
-              productValue: { type: 'string' },
-              state: { type: 'string' },
-              ncm: { type: 'string' },
+              productValue: { type: "string" },
+              state: { type: "string" },
+              ncm: { type: "string" },
               icms: {
-                type: 'object',
+                type: "object",
                 properties: {
-                  rate: { type: 'string' },
-                  amount: { type: 'string' },
+                  rate: { type: "string" },
+                  amount: { type: "string" },
                   taxRule: {
-                    type: 'object',
+                    type: "object",
                     properties: {
-                      operationType: { type: 'string' },
-                      validFrom: { type: 'string' },
-                      sourceName: { type: 'string' },
-                      sourceUrl: { type: 'string' },
+                      operationType: { type: "string" },
+                      validFrom: { type: "string" },
+                      sourceName: { type: "string" },
+                      sourceUrl: { type: "string" },
                     },
                   },
                 },
               },
               ipi: {
-                type: 'object',
+                type: "object",
                 properties: {
-                  description: { type: 'string' },
-                  freightValue: { type: 'string' },
-                  additionalExpenses: { type: 'string' },
-                  calculationBasis: { type: 'string' },
-                  rate: { type: 'string' },
-                  amount: { type: 'string' },
-                  legalSource: { type: 'string' },
+                  description: { type: "string" },
+                  freightValue: { type: "string" },
+                  additionalExpenses: { type: "string" },
+                  calculationBasis: { type: "string" },
+                  rate: { type: "string" },
+                  amount: { type: "string" },
+                  legalSource: { type: "string" },
                 },
               },
               pisCofins: {
-                type: 'object',
+                type: "object",
                 properties: {
-                  pisRate: { type: 'string' },
-                  pisAmount: { type: 'string' },
-                  confinsRate: { type: 'string' },
-                  confinsAmount: { type: 'string' },
-                  totalTax: { type: 'string' },
+                  pisRate: { type: "string" },
+                  pisAmount: { type: "string" },
+                  confinsRate: { type: "string" },
+                  confinsAmount: { type: "string" },
+                  totalTax: { type: "string" },
                 },
               },
               totals: {
-                type: 'object',
+                type: "object",
                 properties: {
-                  taxesTotal: { type: 'string' },
-                  grandTotal: { type: 'string' },
+                  taxesTotal: { type: "string" },
+                  grandTotal: { type: "string" },
                 },
               },
             },
           },
           400: {
-            type: 'object',
+            type: "object",
             properties: {
-              message: { type: 'string' },
+              message: { type: "string" },
             },
           },
         },
@@ -126,7 +127,7 @@ export async function nfCompletaRoutes(app: FastifyInstance) {
     },
     async (
       request: FastifyRequest<{ Body: NfCompletaInput }>,
-      reply: FastifyReply
+      reply: FastifyReply,
     ) => {
       if (request.validationError) {
         return reply.code(400).send({
@@ -142,7 +143,7 @@ export async function nfCompletaRoutes(app: FastifyInstance) {
       } catch (error) {
         if (error instanceof ZodError) {
           return reply.code(400).send({
-            message: error.issues[0]?.message ?? 'Payload invalido',
+            message: error.issues[0]?.message ?? "Payload invalido",
           });
         }
 
@@ -150,8 +151,8 @@ export async function nfCompletaRoutes(app: FastifyInstance) {
           return reply.code(400).send({ message: error.message });
         }
 
-        return reply.code(400).send({ message: 'Payload invalido' });
+        return reply.code(400).send({ message: "Payload invalido" });
       }
-    }
+    },
   );
 }
