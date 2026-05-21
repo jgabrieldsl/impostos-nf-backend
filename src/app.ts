@@ -14,10 +14,9 @@ export function buildApp() {
   });
 
   app.register(fastifyCors, {
-    origin: ["https://main.d3nlgmw6nojw2c.amplifyapp.com"],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: "*",
   });
+
   app.register(swaggerPlugin);
 
   app.register(healthRoutes);
