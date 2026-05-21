@@ -4,13 +4,9 @@ on:
   push:
     branches:
       - main
-      - master
-      - feat/nf-completa
   pull_request:
     branches:
       - main
-      - master
-      - feat/nf-completa
 
 env:
   AWS_REGION: us-east-1                   # Set to your target AWS region
@@ -56,8 +52,8 @@ jobs:
     name: Build Docker & Deploy to AWS ECS
     needs: validate
     runs-on: ubuntu-latest
-    # Only deploy on pushes to main/master branches, or keep it optional
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/feat/nf-completa')
+    # Only deploy on pushes to main branch
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout Code
