@@ -39,7 +39,7 @@ describe("POST /ipi", () => {
 
     const response = await app.inject({
       method: "POST",
-      url: "/ipi",
+      url: "/impostos/ipi",
       payload: {
         productValue: 200,
         ncm: "2201.10.00",
@@ -69,7 +69,7 @@ describe("POST /ipi", () => {
 
     const response = await app.inject({
       method: "POST",
-      url: "/ipi",
+      url: "/impostos/ipi",
       payload: {
         productValue: 100,
         ncm: "99999999",
@@ -89,7 +89,7 @@ describe("POST /ipi", () => {
 
     const response = await app.inject({
       method: "POST",
-      url: "/ipi",
+      url: "/impostos/ipi",
       payload: {
         productValue: 100,
       },

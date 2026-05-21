@@ -56,7 +56,7 @@ describe('POST /icms', () => {
 
     const response = await app.inject({
       method: 'POST',
-      url: '/icms',
+      url: '/impostos/icms',
       payload: {
         productValue: 150,
         state: 'SC',
@@ -88,7 +88,7 @@ describe('POST /icms', () => {
 
     const response = await app.inject({
       method: 'POST',
-      url: '/icms',
+      url: '/impostos/icms',
       payload: {
         productValue: 100,
         state: 'ZZ',
@@ -109,7 +109,7 @@ describe('POST /icms', () => {
 
     const response = await app.inject({
       method: 'POST',
-      url: '/icms',
+      url: '/impostos/icms',
       payload: {
         state: 'SP',
       },
