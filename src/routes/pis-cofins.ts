@@ -9,7 +9,7 @@ interface PisCofinRequest {
 
 export async function pisCofinRoutes(app: FastifyInstance) {
   app.post<{ Body: PisCofinRequest }>(
-    '/IMPOSTOS/calcular-pis-confins',
+    '/impostos/pis-cofins',
     {
       schema: {
         body: {

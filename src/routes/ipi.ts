@@ -9,7 +9,7 @@ import { ipiService } from "../services/ipi-service";
 
 export async function ipiRoutes(app: FastifyInstance) {
   app.post<{ Body: IpiCalculationInput }>(
-    "/ipi",
+    "/impostos/ipi",
     {
       attachValidation: true,
       schema: {
