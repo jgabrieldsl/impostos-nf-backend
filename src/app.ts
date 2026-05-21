@@ -13,7 +13,11 @@ export function buildApp() {
     logger: true,
   });
 
-  app.register(fastifyCors);
+  app.register(fastifyCors, {
+    origin: ["https://main.d3nlgmw6nojw2c.amplifyapp.com"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  });
   app.register(swaggerPlugin);
 
   app.register(healthRoutes);
