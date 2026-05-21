@@ -12,6 +12,9 @@ export async function pisCofinRoutes(app: FastifyInstance) {
     "/impostos/pis-cofins",
     {
       schema: {
+        description:
+          "Calcula as taxas cumulativas/nao cumulativas de PIS e COFINS",
+        tags: ["Impostos"],
         body: {
           type: "object",
           required: ["productValue"],

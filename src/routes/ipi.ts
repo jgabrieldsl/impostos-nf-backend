@@ -13,6 +13,9 @@ export async function ipiRoutes(app: FastifyInstance) {
     {
       attachValidation: true,
       schema: {
+        description:
+          "Calcula o imposto IPI com base no NCM do produto e valores acessorios",
+        tags: ["Impostos"],
         body: {
           type: "object",
           required: ["productValue", "ncm"],

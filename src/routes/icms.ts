@@ -13,6 +13,9 @@ export async function icmsRoutes(app: FastifyInstance) {
     {
       attachValidation: true,
       schema: {
+        description:
+          "Calcula o imposto ICMS com base na UF de destino e valor do produto",
+        tags: ["Impostos"],
         body: {
           type: "object",
           required: ["productValue", "state"],
