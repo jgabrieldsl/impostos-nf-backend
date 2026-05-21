@@ -18,7 +18,7 @@ export function pisCofinService(payload: PisRequest): PisResponse {
   const { productValue, pisRate = 0.0165, confinsRate = 0.076 } = payload;
 
   if (!productValue || productValue <= 0) {
-    throw new Error('productValue inválido');
+    throw new Error("productValue inválido");
   }
 
   const pisAmount = productValue * pisRate;
@@ -28,9 +28,9 @@ export function pisCofinService(payload: PisRequest): PisResponse {
 
   return {
     productValue: productValue.toFixed(2),
-    pisRate: (pisRate * 100).toFixed(2) + '%',
+    pisRate: `${(pisRate * 100).toFixed(2)}%`,
     pisAmount: pisAmount.toFixed(2),
-    confinsRate: (confinsRate * 100).toFixed(2) + '%',
+    confinsRate: `${(confinsRate * 100).toFixed(2)}%`,
     confinsAmount: confinsAmount.toFixed(2),
     totalTax: totalTax.toFixed(2),
     total: total.toFixed(2),

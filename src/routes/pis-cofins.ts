@@ -1,5 +1,5 @@
-import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
-import { pisCofinService } from '../services/pis-service';
+import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { pisCofinService } from "../services/pis-service";
 
 interface PisCofinRequest {
   productValue: number;
@@ -9,38 +9,38 @@ interface PisCofinRequest {
 
 export async function pisCofinRoutes(app: FastifyInstance) {
   app.post<{ Body: PisCofinRequest }>(
-    '/impostos/pis-cofins',
+    "/impostos/pis-cofins",
     {
       schema: {
         body: {
-          type: 'object',
-          required: ['productValue'],
+          type: "object",
+          required: ["productValue"],
           properties: {
             productValue: {
-              type: 'number',
-              description: 'Valor do produto em reais',
+              type: "number",
+              description: "Valor do produto em reais",
             },
             pisRate: {
-              type: 'number',
-              description: 'Taxa de PIS (0-1)',
+              type: "number",
+              description: "Taxa de PIS (0-1)",
             },
             confinsRate: {
-              type: 'number',
-              description: 'Taxa de CONFINS (0-1)',
+              type: "number",
+              description: "Taxa de CONFINS (0-1)",
             },
           },
         },
         response: {
           200: {
-            type: 'object',
+            type: "object",
             properties: {
-              productValue: { type: 'string' },
-              pisRate: { type: 'string' },
-              pisAmount: { type: 'string' },
-              confinsRate: { type: 'string' },
-              confinsAmount: { type: 'string' },
-              totalTax: { type: 'string' },
-              total: { type: 'string' },
+              productValue: { type: "string" },
+              pisRate: { type: "string" },
+              pisAmount: { type: "string" },
+              confinsRate: { type: "string" },
+              confinsAmount: { type: "string" },
+              totalTax: { type: "string" },
+              total: { type: "string" },
             },
           },
         },
@@ -48,10 +48,10 @@ export async function pisCofinRoutes(app: FastifyInstance) {
     },
     async (
       request: FastifyRequest<{ Body: PisCofinRequest }>,
-      reply: FastifyReply
+      reply: FastifyReply,
     ) => {
       const result = pisCofinService(request.body);
       return reply.send(result);
-    }
+    },
   );
 }

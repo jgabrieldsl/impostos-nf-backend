@@ -1,7 +1,7 @@
-import { icmsService } from './icms-service';
-import { ipiService } from './ipi-service';
-import { pisCofinService } from './pis-service';
-import type { NfCompletaInput } from '../schemas/nf-completa-schema';
+import type { NfCompletaInput } from "../schemas/nf-completa-schema";
+import { icmsService } from "./icms-service";
+import { ipiService } from "./ipi-service";
+import { pisCofinService } from "./pis-service";
 
 export interface NfCompletaResponse {
   productValue: string;
@@ -39,7 +39,9 @@ export interface NfCompletaResponse {
   };
 }
 
-export function nfCompletaService(payload: NfCompletaInput): NfCompletaResponse {
+export function nfCompletaService(
+  payload: NfCompletaInput,
+): NfCompletaResponse {
   const {
     productValue,
     state,
@@ -75,7 +77,8 @@ export function nfCompletaService(payload: NfCompletaInput): NfCompletaResponse 
   const cofinsVal = parseFloat(pisResult.confinsAmount);
 
   const taxesTotal = icmsVal + ipiVal + pisVal + cofinsVal;
-  const grandTotal = productValue + freightValue + additionalExpenses + taxesTotal;
+  const grandTotal =
+    productValue + freightValue + additionalExpenses + taxesTotal;
 
   return {
     productValue: productValue.toFixed(2),
