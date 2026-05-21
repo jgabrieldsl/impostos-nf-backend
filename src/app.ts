@@ -2,11 +2,11 @@ import fastifyCors from "@fastify/cors";
 import Fastify from "fastify";
 
 import { swaggerPlugin } from "./plugins/swagger";
+import { healthRoutes } from "./routes/health";
 import { icmsRoutes } from "./routes/icms";
 import { ipiRoutes } from "./routes/ipi";
 import { nfCompletaRoutes } from "./routes/nf-completa";
 import { pisCofinRoutes } from "./routes/pis-cofins";
-import { healthRoutes } from "./routes/health";
 
 export function buildApp() {
   const app = Fastify({
