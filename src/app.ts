@@ -5,6 +5,7 @@ import Fastify from "fastify";
 
 import { icmsRoutes } from "./routes/icms";
 import { ipiRoutes } from "./routes/ipi";
+import { nfCompletaRoutes } from "./routes/nf-completa";
 import { pisCofinRoutes } from "./routes/pis-cofins";
 
 export function buildApp() {
@@ -38,6 +39,7 @@ export function buildApp() {
   app.register(ipiRoutes);
   app.register(pisCofinRoutes);
   app.register(icmsRoutes);
+  app.register(nfCompletaRoutes);
 
   return app;
 }
